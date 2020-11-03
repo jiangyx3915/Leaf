@@ -47,6 +47,16 @@ public class SnowflakeMySqlHolder extends AbstractSnowflakeHolder {
     }
 
     @Override
+    public String getIp() {
+        return this.ip;
+    }
+
+    @Override
+    public String getPort() {
+        return this.port;
+    }
+
+    @Override
     protected void scheduledUploadData() {
         Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
           @Override

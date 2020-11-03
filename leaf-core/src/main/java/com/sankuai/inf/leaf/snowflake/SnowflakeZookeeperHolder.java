@@ -266,6 +266,16 @@ public class SnowflakeZookeeperHolder extends AbstractSnowflakeHolder {
       return workerId;
     }
 
+    @Override
+    public String getIp() {
+      return this.ip;
+    }
+
+    @Override
+    public String getPort() {
+      return this.port;
+    }
+
     public void setWorkerId(long workerId) {
       this.workerId = workerId;
     }

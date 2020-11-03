@@ -11,6 +11,7 @@ import com.sankuai.inf.leaf.segment.dao.impl.WorkerIdAllocDaoImpl;
 import com.sankuai.inf.leaf.server.Constants;
 import com.sankuai.inf.leaf.server.SnowflakeMode;
 import com.sankuai.inf.leaf.server.exception.InitException;
+import com.sankuai.inf.leaf.server.exception.NoModelException;
 import com.sankuai.inf.leaf.snowflake.SnowflakeIDGenImpl;
 import com.sankuai.inf.leaf.snowflake.SnowflakeMySqlHolder;
 import com.sankuai.inf.leaf.snowflake.SnowflakeZookeeperHolder;
@@ -34,7 +35,7 @@ public class SnowflakeService {
     public SnowflakeService() throws InitException, SQLException {
         Properties properties = PropertyFactory.getProperties();
         boolean flag = Boolean.parseBoolean(properties.getProperty(Constants.LEAF_SNOWFLAKE_ENABLE, "true"));
-        String mode = properties.getProperty(Constants.LEAF_SNOWFLAKE_MODE, "zk");
+        String mode = properties.getProperty(Constants.LEAF_SNOWFLAKE_MODE, SnowflakeMode.ZK);
         if (flag) {
             final String ip = Utils.getIp();
             final String port = properties.getProperty(Constants.LEAF_SNOWFLAKE_PORT);
@@ -47,10 +48,12 @@ public class SnowflakeService {
                 WorkerIdAllocDao workerIdAllocDao = new WorkerIdAllocDaoImpl(dataSource);
                 SnowflakeMySqlHolder mySqlHolder = new SnowflakeMySqlHolder(ip, port, workerIdAllocDao);
                 idGen = new SnowflakeIDGenImpl(mySqlHolder);
-            } else {
+            } else if (mode.equals(SnowflakeMode.ZK)){
                 String zkAddress = properties.getProperty(Constants.LEAF_SNOWFLAKE_ZK_ADDRESS);
                 SnowflakeZookeeperHolder zookeeperHolder = new SnowflakeZookeeperHolder(ip, port, zkAddress);
                 idGen = new SnowflakeIDGenImpl(zookeeperHolder);
+            } else {
+                throw new NoModelException();
             }
             if(idGen.init()) {
                 logger.info("Snowflake Service Init Successfully");

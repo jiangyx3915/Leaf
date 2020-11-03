@@ -18,4 +18,16 @@ public interface SnowflakeHolder {
      * @return      机器号
      */
     long getWorkerId();
+
+    /**
+     * 获取机器ip
+     * @return    ip地址
+     */
+    String getIp();
+
+    /**
+     * 获取机器端口
+     * @return    端口号
+     */
+    String getPort();
 }

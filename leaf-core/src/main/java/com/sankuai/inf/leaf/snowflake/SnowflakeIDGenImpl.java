@@ -1,10 +1,8 @@
 package com.sankuai.inf.leaf.snowflake;
 
-import com.google.common.base.Preconditions;
 import com.sankuai.inf.leaf.IDGen;
 import com.sankuai.inf.leaf.common.Result;
 import com.sankuai.inf.leaf.common.Status;
-import com.sankuai.inf.leaf.common.Utils;
 import com.sankuai.inf.leaf.snowflake.exception.CheckHolderInitException;
 import com.sankuai.inf.leaf.snowflake.exception.CheckLastTimeException;
 import com.sankuai.inf.leaf.snowflake.exception.CheckOverloadWorkerIdException;
@@ -45,7 +43,8 @@ public class SnowflakeIDGenImpl implements IDGen {
         if (timeGen() <= twepoch) {
             throw new CheckLastTimeException("Snowflake not support twepoch gt currentTime");
         }
-//        LOGGER.info("twepoch:{} ,ip:{} ,zkAddress:{} port:{}", twepoch, ip, zkAddress, port);
+        LOGGER.info("register twepoch:{} ,ip:{}, port:{}", twepoch,
+          snowflakeHolder.getIp(), snowflakeHolder.getPort());
         boolean initFlag = snowflakeHolder.init();
         if (initFlag) {
             workerId = snowflakeHolder.getWorkerId();
