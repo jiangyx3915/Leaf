@@ -9,4 +9,9 @@ public class Constants {
     public static final String LEAF_SNOWFLAKE_ENABLE = "leaf.snowflake.enable";
     public static final String LEAF_SNOWFLAKE_PORT = "leaf.snowflake.port";
     public static final String LEAF_SNOWFLAKE_ZK_ADDRESS = "leaf.snowflake.zk.address";
+    public static final String LEAF_SNOWFLAKE_MODE = "leaf.snowflake.mode";
+    public static final String LEAF_SNOWFLAKE_MYSQL_JDBC_URL = "leaf.snowflake.mysql.jdbc-url";
+    public static final String LEAF_SNOWFLAKE_MYSQL_USERNAME = "leaf.snowflake.mysql.username";
+    public static final String LEAF_SNOWFLAKE_MYSQL_PASSWORD = "leaf.snowflake.mysql.password";
+
 }

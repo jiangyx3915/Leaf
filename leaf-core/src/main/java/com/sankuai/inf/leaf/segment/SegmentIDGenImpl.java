@@ -93,9 +93,8 @@ public class SegmentIDGenImpl implements IDGen {
                 return;
             }
             // 可进行优化，实际使用时只需要对比cache和数据库中的业务标识，少则增加，多则移除
-            List<String> cacheTags = new ArrayList<String>(cache.keySet());
             for (String dbTag : dbTags) {
-                if (!cacheTags.contains(dbTag)) {
+                if (!cache.containsKey(dbTag)) {
                   SegmentBuffer buffer = new SegmentBuffer();
                   buffer.setKey(dbTag);
                   Segment segment = buffer.getCurrent();
@@ -106,7 +105,7 @@ public class SegmentIDGenImpl implements IDGen {
                   logger.info("Add tag {} from db to IdCache, SegmentBuffer {}", dbTag, buffer);
                 }
             }
-            cacheTags = new ArrayList<>(cache.keySet());
+            List<String> cacheTags = new ArrayList<>(cache.keySet());
             for (String cacheTag : cacheTags) {
                 if (!dbTags.contains(cacheTag)) {
                     cache.remove(cacheTag);

@@ -1,9 +1,12 @@
 package com.sankuai.inf.leaf.segment.model;
 
+/**
+ * @author jiangyx3915
+ */
 public class LeafAlloc {
     private String key;
-    private long maxId;
-    private int step;
+    private Long maxId;
+    private Integer step;
     private String updateTime;
 
     public String getKey() {
@@ -18,7 +21,7 @@ public class LeafAlloc {
         return maxId;
     }
 
-    public void setMaxId(long maxId) {
+    public void setMaxId(Long maxId) {
         this.maxId = maxId;
     }
 
@@ -26,7 +29,7 @@ public class LeafAlloc {
         return step;
     }
 
-    public void setStep(int step) {
+    public void setStep(Integer step) {
         this.step = step;
     }
 
