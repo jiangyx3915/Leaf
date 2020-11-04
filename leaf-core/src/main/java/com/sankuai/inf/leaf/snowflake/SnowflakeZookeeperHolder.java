@@ -111,15 +111,11 @@ public class SnowflakeZookeeperHolder extends AbstractSnowflakeHolder {
             }
         } catch (Exception e) {
             LOGGER.error("Start node ERROR {0}", e);
-            try {
-                Properties properties = new Properties();
-                properties.load(new FileInputStream(new File(PROP_PATH.replace("{port}", port + ""))));
-                workerId = Integer.parseInt(properties.getProperty("workerID"));
-                LOGGER.warn("START FAILED ,use local node file properties workerID-{}", workerId);
-            } catch (Exception e1) {
-                LOGGER.error("Read file error ", e1);
+            Integer localWorkerId = readLocalFile();
+            if (localWorkerId == null) {
                 return false;
             }
+            this.workerId = localWorkerId;
         }
         return true;
     }
@@ -274,6 +270,11 @@ public class SnowflakeZookeeperHolder extends AbstractSnowflakeHolder {
     @Override
     public String getPort() {
       return this.port;
+    }
+
+    @Override
+    public String getMode() {
+      return "zk";
     }
 
     public void setWorkerId(long workerId) {

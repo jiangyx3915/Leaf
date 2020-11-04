@@ -3,6 +3,8 @@ package com.sankuai.inf.leaf.snowflake;
 import com.sankuai.inf.leaf.segment.dao.WorkerIdAllocDao;
 import com.sankuai.inf.leaf.segment.model.LeafWorkerIdAlloc;
 import com.sankuai.inf.leaf.snowflake.exception.CheckLastTimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -13,6 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @author jiangyx3915
  */
 public class SnowflakeMySqlHolder extends AbstractSnowflakeHolder {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SnowflakeMySqlHolder.class);
     private final WorkerIdAllocDao allocDao;
     private int workerId;
     private long lastUpdateTime;
@@ -36,9 +39,14 @@ public class SnowflakeMySqlHolder extends AbstractSnowflakeHolder {
             scheduledUploadData();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("snowflake mysql mode init fail, error is {0}", e);
+            Integer localWorkerId = readLocalFile();
+            if (localWorkerId == null) {
+                return false;
+            }
+            this.workerId = localWorkerId;
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -54,6 +62,11 @@ public class SnowflakeMySqlHolder extends AbstractSnowflakeHolder {
     @Override
     public String getPort() {
         return this.port;
+    }
+
+    @Override
+    public String getMode() {
+      return "mysql";
     }
 
     @Override

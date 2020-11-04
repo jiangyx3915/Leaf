@@ -30,4 +30,10 @@ public interface SnowflakeHolder {
      * @return    端口号
      */
     String getPort();
+
+    /**
+     * 获取使用的模式
+     * @return      模式
+     */
+    String getMode();
 }

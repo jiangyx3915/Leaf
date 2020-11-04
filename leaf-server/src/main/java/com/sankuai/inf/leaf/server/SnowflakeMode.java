@@ -12,4 +12,5 @@ package com.sankuai.inf.leaf.server;
 public class SnowflakeMode {
   public static final String ZK = "zk";
   public static final String MYSQL = "mysql";
+  public static final String LOCAL = "local";
 }

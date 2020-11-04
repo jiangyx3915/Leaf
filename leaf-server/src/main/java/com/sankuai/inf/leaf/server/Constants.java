@@ -1,5 +1,9 @@
 package com.sankuai.inf.leaf.server;
 
+/**
+ * 配置参数
+ * @author jiangyx3915
+ */
 public class Constants {
     public static final String LEAF_SEGMENT_ENABLE = "leaf.segment.enable";
     public static final String LEAF_JDBC_URL = "leaf.jdbc.url";
@@ -13,5 +17,6 @@ public class Constants {
     public static final String LEAF_SNOWFLAKE_MYSQL_JDBC_URL = "leaf.snowflake.mysql.jdbc-url";
     public static final String LEAF_SNOWFLAKE_MYSQL_USERNAME = "leaf.snowflake.mysql.username";
     public static final String LEAF_SNOWFLAKE_MYSQL_PASSWORD = "leaf.snowflake.mysql.password";
+    public static final String LEAF_SNOWFLAKE_LOCAL_WORKERID_MAP = "leaf.snowflake.local.workerIdMap";
 
 }

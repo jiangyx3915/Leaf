@@ -50,7 +50,7 @@ public class SnowflakeIDGenImpl implements IDGen {
             workerId = snowflakeHolder.getWorkerId();
             LOGGER.info("START SUCCESS USE ZK WORKERID-{}", workerId);
         } else {
-            throw new CheckHolderInitException("Snowflake Id Gen is not init ok");
+            throw new CheckHolderInitException("Snowflake Mode " + snowflakeHolder.getMode() + " Id Gen is not init ok");
         }
         if (workerId < 0 || workerId > maxWorkerId) {
             throw new CheckOverloadWorkerIdException("workerID must gte 0 and lte 1023");

@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  * SnowflakeHolder抽象类
@@ -31,7 +33,7 @@ public abstract class AbstractSnowflakeHolder implements SnowflakeHolder {
         if (exists) {
             try {
                 FileUtils.writeStringToFile(leafConfFile, "workerId=" + workerId, false);
-                LOGGER.info("update file cache workerID is {}", workerId);
+                LOGGER.info("update file cache workerId is {}", workerId);
             } catch (IOException e) {
                 LOGGER.error("update file cache error ", e);
             }
@@ -49,7 +51,7 @@ public abstract class AbstractSnowflakeHolder implements SnowflakeHolder {
                   LOGGER.warn("create parent dir error===");
               }
             } catch (IOException e) {
-                LOGGER.warn("craete workerID conf file error", e);
+                LOGGER.warn("create workerId conf file error", e);
             }
         }
     }
@@ -58,4 +60,21 @@ public abstract class AbstractSnowflakeHolder implements SnowflakeHolder {
      * 定时上传数据到注册中心
      */
     protected abstract void scheduledUploadData();
+
+    /**
+     * 读取本地文件中缓存的机器号
+     * @return      机器号
+     */
+    protected Integer readLocalFile() {
+          try {
+              Properties properties = new Properties();
+              properties.load(new FileInputStream(new File(PROP_PATH.replace("{port}", port + ""))));
+              Integer workerId = Integer.parseInt(properties.getProperty("workerId"));
+              LOGGER.warn("START FAILED ,use local node file properties workerId-{}", workerId);
+              return workerId;
+          } catch (Exception e) {
+              LOGGER.error("Read file error ", e);
+              return null;
+          }
+      }
 }
